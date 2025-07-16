@@ -1,0 +1,33 @@
+package com.oglasi.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.oglasi.models.Oglas;
+import com.oglasi.repositories.OglasRepository;
+
+@Service
+public class OglasService {
+
+    @Autowired
+    private OglasRepository oglasRepository;
+
+    public List<Oglas> getAllOglasi() {
+        return oglasRepository.findAll();
+    }
+
+    public Optional<Oglas> getOglasById(Long id) {
+        return oglasRepository.findById(id);
+    }
+
+    public Oglas saveOglas(Oglas oglas) {
+        return oglasRepository.save(oglas);
+    }
+
+    public void deleteOglas(Long id) {
+        oglasRepository.deleteById(id);
+    }
+}

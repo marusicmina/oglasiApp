@@ -1,0 +1,5 @@
+package com.oglasi.repositories;
+
+public class KorisnikRepository {
+
+}

@@ -1,0 +1,65 @@
+package com.oglasi.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.oglasi.models.Kategorija;
+import com.oglasi.models.Oglas;
+import com.oglasi.services.OglasService;
+
+@RestController
+@RequestMapping("/api/oglasi")
+public class OglasController {
+
+    @Autowired
+    private OglasService oglasService;
+
+    @GetMapping
+    public List<Oglas> getAllOglasi() {
+        return oglasService.getAllOglasi();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Oglas> getOglasById(@PathVariable Long id) {
+        return oglasService.getOglasById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public Oglas createOglas(@RequestBody Oglas oglas) {
+        return oglasService.saveOglas(oglas);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Oglas> updateOglas(@PathVariable Long id, @RequestBody Oglas oglas) {
+        return oglasService.getOglasById(id)
+                .map(existing -> {
+                    oglas.setId(id);
+                    Oglas updated = oglasService.saveOglas(oglas);
+                    return ResponseEntity.ok(updated);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOglas(@PathVariable Long id) {
+        oglasService.deleteOglas(id);
+        return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/kategorija/{kategorija}")
+    public List<Oglas> getOglasiByKategorija(@PathVariable String kategorija) {
+        Kategorija kat;
+        try {
+            kat = Kategorija.valueOf(kategorija.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            // možeš vratiti praznu listu ili HTTP 400
+            return List.of();
+        }
+        return oglasService.getOglasiByKategorija(kat);
+    }
+
+}

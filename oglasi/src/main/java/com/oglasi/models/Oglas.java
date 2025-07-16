@@ -1,0 +1,118 @@
+package com.oglasi.models;
+
+import jakarta.persistence.*;
+//import lombok.Getter;
+//import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+//@Getter
+//@Setter
+@Entity
+@Table(name = "oglas")
+public class Oglas {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String naziv;
+
+    @Column(length = 1000)
+    private String opis;
+
+    private String urlSlike;
+
+    private BigDecimal cena;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Kategorija kategorija;
+
+    private String grad;
+
+    @Column(nullable = false)
+    private LocalDateTime datumPostavljanja;
+
+    @ManyToOne
+    @JoinColumn(name = "korisnik_id", nullable = false)
+    @JsonBackReference
+    private Korisnik korisnik;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNaziv() {
+        return naziv;
+    }
+
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
+    }
+
+    public String getOpis() {
+        return opis;
+    }
+
+    public void setOpis(String opis) {
+        this.opis = opis;
+    }
+
+    public String getUrlSlike() {
+        return urlSlike;
+    }
+
+    public void setUrlSlike(String urlSlike) {
+        this.urlSlike = urlSlike;
+    }
+
+    public BigDecimal getCena() {
+        return cena;
+    }
+
+    public void setCena(BigDecimal cena) {
+        this.cena = cena;
+    }
+
+    public Kategorija getKategorija() {
+        return kategorija;
+    }
+
+    public void setKategorija(Kategorija kategorija) {
+        this.kategorija = kategorija;
+    }
+
+    public String getGrad() {
+        return grad;
+    }
+
+    public void setGrad(String grad) {
+        this.grad = grad;
+    }
+
+    public LocalDateTime getDatumPostavljanja() {
+        return datumPostavljanja;
+    }
+
+    public void setDatumPostavljanja(LocalDateTime datumPostavljanja) {
+        this.datumPostavljanja = datumPostavljanja;
+    }
+
+    public Korisnik getKorisnik() {
+        return korisnik;
+    }
+
+    public void setKorisnik(Korisnik korisnik) {
+        this.korisnik = korisnik;
+    }
+}

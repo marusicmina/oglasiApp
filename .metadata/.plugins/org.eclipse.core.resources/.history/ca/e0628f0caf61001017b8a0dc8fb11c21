@@ -1,0 +1,13 @@
+package models.copy;
+
+public enum Kategorija {
+    CLOTHING,
+    TOOLS,
+    SPORTS,
+    ACCESSORIES,
+    FURNITURE,
+    PETS,
+    GAMES,
+    BOOKS,
+    TECHNOLOGY
+}

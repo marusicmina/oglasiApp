@@ -1,0 +1,9 @@
+package com.oglasi.repositories;
+
+import com.oglasi.models.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OglasRepository extends JpaRepository<Oglas, Long> {
+    // Ako želiš da pretražuješ po nazivu, možeš dodati:
+    List<Oglas> findByNazivContainingIgnoreCase(String naziv);
+}
